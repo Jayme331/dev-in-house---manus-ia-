@@ -1,0 +1,10 @@
+ .pagina {
+            display: none;
+        }
+        .pagina.ativa {
+            display: block;
+        }
+        /* Estilos adicionais para a página de autenticação */
+        .auth-section {
+            padding: calc(80px + var(--espacamento-extra)) 0 var(--espacamento-extra);
+        }

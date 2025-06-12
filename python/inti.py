@@ -1,0 +1,1 @@
+from models import db, Usuario, Especialidade, Avaliacao, Portfolio

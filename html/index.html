@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dev'in House - Encontre os Melhores Profissionais de Construção Civil</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="/js/script.js" defer></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <script src="/js/api.js" defer></script>
+    <script src="/js/auth.js" defer></script>
+    <script src="/js/paginas.js" defer></script>
+    <link rel="icon" href="/img/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" sizes="180x180" href="/img/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png">
+    <meta name="description" content="Dev'in House é a plataforma que conecta você aos melhores profissionais de construção civil, com avaliações reais e portfólio de trabalhos. Encontre pedreiros, eletricistas, encanadores e muito mais!">
+    <meta name="keywords" content="profissionais de construção, pedreiro, eletricista, encanador, pintor, carpinteiro, serralheiro, gesseiro, jardineiro, arquiteto, engenheiro civil">
+    <meta name="author" content="Dev'in House Team">
+    <meta property="og:title" content="Dev'in House - Encontre os Melhores Profissionais de Construção Civil">
+    <meta property="og:description" content="Conectamos você aos melhores profissionais da sua região, com avaliações reais e portfólio de trabalhos.">
+    <meta property="og:image" content="/img/og-image.png">
+    <meta property="og:url" content="https://devinhouse.com">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Dev'in House - Encontre os Melhores Profissionais de Construção Civil">
+    <meta name="twitter:description" content="Conectamos você aos melhores profissionais da sua região, com avaliações reais e portfólio de trabalhos.">
+    <meta name="twitter:image" content="/img/twitter-image.png">
+    <meta name="theme-color" content="#ffffff">
+    <link rel="manifest" href="/manifest.json">
+    <link rel="stylesheet" href="/css/responsive.css">  
+</head>
+<body>
+    <!-- Cabeçalho -->
+    <header class="header">
+        <div class="container header-container">
+            <div class="logo">
+                <a onclick="mostrarPagina('inicio'); return false;">
+                    <img src="/img/logo.svg" alt="Dev\'in House Logo" class="logo-icon">
+                    <h1>Dev\'in<span>House</span></h1>
+                </a>
+            </div>
+            <nav>
+                <ul class="nav-menu">
+                    <li><a onclick="mostrarPagina('inicio'); return false;" id="nav-inicio" class="active">Início</a></li>
+                    <li><a onclick="mostrarPagina('profissionais'); return false;" id="nav-profissionais">Profissionais</a></li>
+                    <li><a onclick="mostrarPagina('sobre'); return false;" id="nav-sobre">Sobre Nós</a></li>
+                    <li><a onclick="mostrarPagina('contacto'); return false;" id="nav-contacto">Contacto</a></li>
+                </ul>
+                <button class="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </nav>
+            <div class="nav-buttons">
+                <a onclick="mostrarPagina('login'); return false;" class="btn btn-outline">Entrar</a>
+                <a onclick="mostrarPagina('registar'); return false;" class="btn btn-secondary">Registar</a>
+            </div>
+            <div class="user-menu" style="display: none;">
+                <span id="user-name"></span>
+                <button onclick="logout();" class="btn btn-outline">Sair</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Página Início -->
+    <div id="inicio" class="pagina ativa">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="container">
+                <h1>Encontre os Melhores Profissionais de Construção Civil</h1>
+                <p>Conectamos você aos melhores profissionais da sua região, com avaliações reais e portfólio de trabalhos.</p>
+                
+                <div class="search-box">
+                    <h3>O que você precisa?</h3>
+                    <form class="search-form">
+                        <div class="search-group">
+                            <label for="specialty">Especialidade</label>
+                            <select id="specialty" class="form-control">
+                                <option value="">Todas as especialidades</option>
+                                <option value="pedreiro">Pedreiro</option>
+                                <option value="eletricista">Eletricista</option>
+                                <option value="encanador">Encanador</option>
+                                <option value="pintor">Pintor</option>
+                                <option value="carpinteiro">Carpinteiro</option>
+                                <option value="serralheiro">Serralheiro</option>
+                                <option value="gesseiro">Gesseiro</option>
+                                <option value="jardineiro">Jardineiro</option>
+                                <option value="arquiteto">Arquiteto</option>
+                                <option value="engenheiro">Engenheiro Civil</option>
+                            </select>
+                        </div>
+                        <div class="search-group">
+                            <label for="location">Região</label>
+                            <input type="text" id="location" class="form-control" placeholder="Digite sua cidade ou região">
+                        </div>
+                        <button type="submit" class="btn btn-primary search-button">Buscar Profissionais</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- Categorias -->
+        <section class="section">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Categorias Populares</h2>
+                </div>
+                
+                <div class="categories">
+                    <div class="category-card">
+                        <div class="category-image">
+                            <img src="https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Construção">
+                        </div>
+                        <div class="category-content">
+                            <h3>Construção</h3>
+                            <p>Pedreiros, mestres de obras e construtores</p>
+                            <a onclick="mostrarPagina('profissionais'); return false;" class="btn btn-outline">Ver Profissionais</a>
+                        </div>
+                    </div>
+                    
+                    <div class="category-card">
+                        <div class="category-image">
+                            <img src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Instalações Elétricas">
+                        </div>
+                        <div class="category-content">
+                            <h3>Instalações Elétricas</h3>
+                            <p>Eletricistas e técnicos em instalações</p>
+                            <a onclick="mostrarPagina('profissionais'); return false;" class="btn btn-outline">Ver Profissionais</a>
+                        </div>
+                    </div>
+                    
+                    <div class="category-card">
+                        <div class="category-image">
+                            <img src="https://images.unsplash.com/photo-1607472586893-edb57bdc0e39?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Instalações Hidráulicas">
+                        </div>
+                        <div class="category-content">
+                            <h3>Instalações Hidráulicas</h3>
+                            <p>Encanadores e especialistas em hidráulica</p>
+                            <a onclick="mostrarPagina('profissionais'); return false;" class="btn btn-outline">Ver Profissionais</a>
+                        </div>
+                    </div>
+                    
+                    <div class="category-card">
+                        <div class="category-image">
+                            <img src="https://images.unsplash.com/photo-1589939705384-5185137a7f0f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Acabamento">
+                        </div>
+                        <div class="category-content">
+                            <h3>Acabamento</h3>
+                            <p>Pintores, gesseiros e especialistas em acabamento</p>
+                            <a onclick="mostrarPagina('profissionais'); return false;" class="btn btn-outline">Ver Profissionais</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Profissionais em Destaque -->
+        <section class="section" style="background-color: var(--cor-fundo-escuro);">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Profissionais em Destaque</h2>
+                </div>
+                
+                <div class="professionals">
+                    <div class="professional-card">
+                        <div class="professional-image">
+                            <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="João Silva">
+                        </div>
+                        <div class="professional-content">
+                            <div class="professional-header">
+                                <h3>João Silva</h3>
+                                <div class="professional-rating">4.5</div>
+                            </div>
+                            <div class="professional-meta">
+                                <span>Pedreiro</span>
+                                <span>Construção</span>
+                            </div>
+                            <p class="professional-description">Especialista em construção e reformas com mais de 15 anos de experiência. Trabalho com alvenaria, fundações e acabamentos.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="professional-card">
+                        <div class="professional-image">
+                            <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Ana Oliveira">
+                        </div>
+                        <div class="professional-content">
+                            <div class="professional-header">
+                                <h3>Ana Oliveira</h3>
+                                <div class="professional-rating">5.0</div>
+                            </div>
+                            <div class="professional-meta">
+                                <span>Arquiteta</span>
+                                <span>Projeto</span>
+                            </div>
+                            <p class="professional-description">Arquiteta com foco em projetos residenciais e comerciais. Especialista em design de interiores e otimização de espaços.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="professional-card">
+                        <div class="professional-image">
+                            <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Carlos Santos">
+                        </div>
+                        <div class="professional-content">
+                            <div class="professional-header">
+                                <h3>Carlos Santos</h3>
+                                <div class="professional-rating">4.0</div>
+                            </div>
+                            <div class="professional-meta">
+                                <span>Eletricista</span>
+                                <span>Instalações</span>
+                            </div>
+                            <p class="professional-description">Eletricista certificado com experiência em instalações residenciais e comerciais. Especialista em instalações elétricas e manutenção.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="text-align: center; margin-top: var(--espacamento-grande);">
+                    <a onclick="mostrarPagina('profissionais'); return false;" class="btn btn-primary">Ver Todos os Profissionais</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Como Funciona -->
+        <section class="section">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Como Funciona</h2>
+                </div>
+                
+                <div class="how-it-works">
+                    <div class="step-card">
+                        <div class="step-icon">
+                            <i class="fas fa-search"></i>
+                        </div>
+                        <h3>Busque</h3>
+                        <p>Pesquise profissionais por especialidade, região ou avaliação para encontrar o melhor para seu projeto.</p>
+                    </div>
+                    
+                    <div class="step-card">
+                        <div class="step-icon">
+                            <i class="fas fa-clipboard-list"></i>
+                        </div>
+                        <h3>Compare</h3>
+                        <p>Analise perfis, portfólios e avaliações de outros clientes para fazer a melhor escolha.</p>
+                    </div>
+                    
+                    <div class="step-card">
+                        <div class="step-icon">
+                            <i class="fas fa-comments"></i>
+                        </div>
+                        <h3>Contacte</h3>
+                        <p>Entre em contacto diretamente com o profissional para discutir seu projeto e solicitar orçamentos.</p>
+                    </div>
+                    
+                    <div class="step-card">
+                        <div class="step-icon">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <h3>Avalie</h3>
+                        <p>Após a conclusão do serviço, avalie o profissional e ajude outros clientes a fazerem boas escolhas.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Depoimentos -->
+        <section class="testimonials">
+            <div class="container">
+                <div class="section-title">
+                    <h2>O Que Dizem Nossos Clientes</h2>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="testimonial-text">
+                        Encontrei um ótimo eletricista através do Dev\'in House. O serviço foi rápido, profissional e com preço justo. Recomendo a todos!
+                    </div>
+                    <div class="testimonial-author">Maria Costa</div>
+                    <div class="testimonial-role">Cliente</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA -->
+        <section class="cta">
+            <div class="container">
+                <h2>Junte-se à Nossa Comunidade</h2>
+                <p>Seja você um cliente em busca de profissionais qualificados ou um profissional querendo expandir seus negócios, o Dev\'in House é o lugar certo para você.</p>
+                <div class="cta-buttons">
+                    <a onclick="mostrarPagina('registar'); return false;" class="btn btn-primary">Cadastre-se como Cliente</a>
+                    <a onclick="mostrarPagina('registar'); return false;" class="btn btn-outline">Cadastre-se como Profissional</a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Página Profissionais -->
+    <div id="profissionais" class="pagina">
+        <section class="section">
+            <div class="container">
+                <div class="section-title">
+                    <h1>Profissionais</h1>
+                    <p>Encontre os melhores profissionais para o seu projeto</p>
+                </div>
+                
+                <div class="search-box" style="margin-bottom: var(--espacamento-grande);">
+                    <form class="search-form">
+                        <div class="search-group">
+                            <label for="filter-specialty">Especialidade</label>
+                            <select id="filter-specialty" class="form-control">
+                                <option value="">Todas as especialidades</option>
+                                <option value="pedreiro">Pedreiro</option>
+                                <option value="eletricista">Eletricista</option>
+                                <option value="encanador">Encanador</option>
+                                <option value="pintor">Pintor</option>
+                                <option value="carpinteiro">Carpinteiro</option>
+                                <option value="serralheiro">Serralheiro</option>
+                                <option value="gesseiro">Gesseiro</option>
+                                <option value="jardineiro">Jardineiro</option>
+                                <option value="arquiteto">Arquiteto</option>
+                                <option value="engenheiro">Engenheiro Civil</option>
+                            </select>
+                        </div>
+                        <div class="search-group">
+                            <label for="filter-location">Região</label>
+                            <input type="text" id="filter-location" class="form-control" placeholder="Digite sua cidade ou região">
+                        </div>
+                        <div class="search-group">
+                            <label for="filter-rating">Avaliação Mínima</label>
+                            <select id="filter-rating" class="form-control">
+                                <option value="">Qualquer avaliação</option>
+                                <option value="5">5 estrelas</option>
+                                <option value="4">4+ estrelas</option>
+                                <option value="3">3+ estrelas</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary search-button">Filtrar</button>
+                    </form>
+                </div>
+                
+                <div class="professionals">
+                    <div class="professional-card">
+                        <div class="professional-image">
+                            <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="João Silva">
+                        </div>
+                        <div class="professional-content">
+                            <div class="professional-header">
+                                <h3>João Silva</h3>
+                                <div class="professional-rating">4.5</div>
+                            </div>
+                            <div class="professional-meta">
+                                <span>Pedreiro</span>
+                                <span>Lisboa</span>
+                            </div>
+                            <p class="professional-description">Especialista em construção e reformas com mais de 15 anos de experiência. Trabalho com alvenaria, fundações e acabamentos.</p>
+                            <div class="professional-tags">
+                                <span class="professional-tag">Alvenaria</span>
+                                <span class="professional-tag">Fundações</span>
+                                <span class="professional-tag">Acabamentos</span>
+                            </div>
+                            <a href="#" class="btn btn-outline">Ver Perfil</a>
+                        </div>
+                    </div>
+                    
+                    <div class="professional-card">
+                        <div class="professional-image">
+                            <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Ana Oliveira">
+                        </div>
+                        <div class="professional-content">
+                            <div class="professional-header">
+                                <h3>Ana Oliveira</h3>
+                                <div class="professional-rating">5.0</div>
+                            </div>
+                            <div class="professional-meta">
+                                <span>Arquiteta</span>
+                                <span>Porto</span>
+                            </div>
+                            <p class="professional-description">Arquiteta com foco em projetos residenciais e comerciais. Especialista em design de interiores e otimização de espaços.</p>
+                            <div class="professional-tags">
+                                <span class="professional-tag">Projetos</span>
+                                <span class="professional-tag">Design</span>
+                                <span class="professional-tag">Interiores</span>
+                            </div>
+                            <a href="#" class="btn btn-outline">Ver Perfil</a>
+                        </div>
+                    </div>
+                    
+                    <div class="professional-card">
+                        <div class="professional-image">
+                            <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Carlos Santos">
+                        </div>
+                        <div class="professional-content">
+                            <div class="professional-header">
+                                <h3>Carlos Santos</h3>
+                                <div class="professional-rating">4.0</div>
+                            </div>
+                            <div class="professional-meta">
+                                <span>Eletricista</span>
+                                <span>Braga</span>
+                            </div>
+                            <p class="professional-description">Eletricista certificado com experiência em instalações residenciais e comerciais. Especialista em instalações elétricas e manutenção.</p>
+                            <div class="professional-tags">
+                                <span class="professional-tag">Instalações</span>
+                                <span class="professional-tag">Manutenção</span>
+                                <span class="professional-tag">Certificado</span>
+                            </div>
+                            <a href="#" class="btn btn-outline">Ver Perfil</a>
+                        </div>
+                    </div>
+                    
+                    <div class="professional-card">
+                        <div class="professional-image">
+                            <img src="https://images.unsplash.com/photo-1540569014015-19a7be504e3a?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Pedro Almeida">
+                        </div>
+                        <div class="professional-content">
+                            <div class="professional-header">
+                                <h3>Pedro Almeida</h3>
+                                <div class="professional-rating">4.8</div>
+                            </div>
+                            <div class="professional-meta">
+                                <span>Pintor</span>
+                                <span>Coimbra</span>
+                            </div>
+                            <p class="professional-description">Pintor profissional com mais de 10 anos de experiência. Especializado em pinturas internas e externas, texturização e efeitos decorativos.</p>
+                            <div class="professional-tags">
+                                <span class="professional-tag">Pintura</span>
+                                <span class="professional-tag">Textura</span>
+                                <span class="professional-tag">Decoração</span>
+                            </div>
+                            <a href="#" class="btn btn-outline">Ver Perfil</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Página Sobre Nós -->
+    <div id="sobre" class="pagina">
+        <section class="about-section">
+            <div class="container">
+                <div class="about-header">
+                    <h1>Sobre Nós</h1>
+                    <p>Conheça a história, missão e valores da Dev\'in House, a plataforma que conecta os melhores profissionais de construção civil aos clientes.</p>
+                </div>
+
+                <div class="about-content">
+                    <div class="about-text">
+                        <h2>Nossa História</h2>
+                        <p>A Dev\'in House nasceu em 2023 da visão de um grupo de empreendedores que identificaram uma lacuna no mercado de construção civil: a dificuldade de encontrar profissionais qualificados e confiáveis para projetos residenciais e comerciais.</p>
+                        <p>Após meses de pesquisa e desenvolvimento, lançamos a plataforma com o objetivo de criar um ambiente onde clientes pudessem encontrar facilmente profissionais avaliados e verificados, enquanto os profissionais pudessem expandir seus negócios e construir uma reputação sólida.</p>
+                        <p>Hoje, a Dev\'in House é uma referência no setor, conectando milhares de profissionais qualificados a clientes em todo o país, promovendo transparência, qualidade e confiança em cada projeto.</p>
+                    </div>
+                    <div class="about-image">
+                        <img src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Equipe Dev\'in House">
+                    </div>
+                </div>
+
+                <div class="section-title">
+                    <h2>Nossa Missão e Valores</h2>
+                </div>
+
+                <div class="about-values">
+                    <div class="value-card">
+                        <div class="value-icon">
+                            <i class="fas fa-handshake"></i>
+                        </div>
+                        <h3>Confiança</h3>
+                        <p>Construímos relações baseadas em transparência e integridade, garantindo que cada interação na nossa plataforma seja segura e confiável.</p>
+                    </div>
+                    <div class="value-card">
+                        <div class="value-icon">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <h3>Qualidade</h3>
+                        <p>Promovemos a excelência em todos os serviços, incentivando os melhores profissionais e práticas no setor de construção civil.</p>
+                    </div>
+                    <div class="value-card">
+                        <div class="value-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h3>Comunidade</h3>
+                        <p>Fomentamos uma comunidade colaborativa onde profissionais e clientes podem crescer juntos e compartilhar conhecimentos.</p>
+                    </div>
+                    <div class="value-card">
+                        <div class="value-icon">
+                            <i class="fas fa-lightbulb"></i>
+                        </div>
+                        <h3>Inovação</h3>
+                        <p>Buscamos constantemente novas soluções e tecnologias para melhorar a experiência de todos os usuários da plataforma.</p>
+                    </div>
+                </div>
+
+                <div class="section-title">
+                    <h2>Nossa Equipe</h2>
+                </div>
+
+                <div class="team-section">
+                    <div class="team-grid">
+                        <div class="team-member">
+                            <div class="team-photo">
+                                <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80" alt="João Silva">
+                            </div>
+                            <div class="team-info">
+                                <h3>João Silva</h3>
+                                <div class="team-role">CEO & Fundador</div>
+                                <p>Com mais de 15 anos de experiência no setor de construção civil, João fundou a Dev\'in House com a visão de transformar o mercado.</p>
+                                <div class="team-social">
+                                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                                    <a href="#"><i class="fab fa-twitter"></i></a>
+                                    <a href="#"><i class="fas fa-envelope"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="team-member">
+                            <div class="team-photo">
+                                <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80" alt="Ana Oliveira">
+                            </div>
+                            <div class="team-info">
+                                <h3>Ana Oliveira</h3>
+                                <div class="team-role">Diretora de Operações</div>
+                                <p>Ana lidera as operações diárias da plataforma, garantindo que profissionais e clientes tenham a melhor experiência possível.</p>
+                                <div class="team-social">
+                                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                                    <a href="#"><i class="fab fa-twitter"></i></a>
+                                    <a href="#"><i class="fas fa-envelope"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="team-member">
+                            <div class="team-photo">
+                                <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80" alt="Carlos Santos">
+                            </div>
+                            <div class="team-info">
+                                <h3>Carlos Santos</h3>
+                                <div class="team-role">Diretor de Tecnologia</div>
+                                <p>Carlos é responsável pelo desenvolvimento e manutenção da plataforma, implementando novas funcionalidades e melhorias.</p>
+                                <div class="team-social">
+                                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                                    <a href="#"><i class="fab fa-github"></i></a>
+                                    <a href="#"><i class="fas fa-envelope"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="team-member">
+                            <div class="team-photo">
+                                <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80" alt="Mariana Costa">
+                            </div>
+                            <div class="team-info">
+                                <h3>Mariana Costa</h3>
+                                <div class="team-role">Diretora de Marketing</div>
+                                <p>Mariana lidera as estratégias de marketing e comunicação, ajudando a conectar profissionais e clientes em todo o país.</p>
+                                <div class="team-social">
+                                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                                    <a href="#"><i class="fab fa-instagram"></i></a>
+                                    <a href="#"><i class="fas fa-envelope"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Página Contacto -->
+    <div id="contacto" class="pagina">
+        <section class="contact-section">
+            <div class="container">
+                <div class="contact-header">
+                    <h1>Entre em Contacto</h1>
+                    <p>Estamos aqui para ajudar. Envie-nos uma mensagem e responderemos o mais breve possível.</p>
+                </div>
+
+                <div class="contact-content">
+                    <div class="contact-info">
+                        <h3>Informações de Contacto</h3>
+                        
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div class="contact-text">
+                                <h4>Endereço</h4>
+                                <p>Avenida da Liberdade, 245<br>1250-143 Lisboa, Portugal</p>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-phone-alt"></i>
+                            </div>
+                            <div class="contact-text">
+                                <h4>Telefone</h4>
+                                <p>+351 210 123 456</p>
+                                <p>+351 910 987 654</p>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div class="contact-text">
+                                <h4>Email</h4>
+                                <p>info@devinhouse.pt</p>
+                                <p>suporte@devinhouse.pt</p>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="contact-text">
+                                <h4>Horário de Funcionamento</h4>
+                                <p>Segunda a Sexta: 9h às 18h</p>
+                                <p>Sábado: 10h às 14h</p>
+                                <p>Domingo: Fechado</p>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-social">
+                            <h4>Siga-nos</h4>
+                            <div class="footer-social">
+                                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                                <a href="#"><i class="fab fa-instagram"></i></a>
+                                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                                <a href="#"><i class="fab fa-twitter"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-form">
+                        <h3>Envie-nos uma Mensagem</h3>
+                        <form id="contact-form">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="name">Nome Completo</label>
+                                    <input type="text" id="name" name="name" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="email">Email</label>
+                                    <input type="email" id="email" name="email" class="form-control" required>
+                                </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="phone">Telefone</label>
+                                    <input type="tel" id="phone" name="phone" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="subject">Assunto</label>
+                                    <select id="subject" name="subject" class="form-control" required>
+                                        <option value="">Selecione um assunto</option>
+                                        <option value="info">Informações Gerais</option>
+                                        <option value="support">Suporte Técnico</option>
+                                        <option value="partnership">Parcerias</option>
+                                        <option value="feedback">Feedback</option>
+                                        <option value="other">Outro</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="message">Mensagem</label>
+                                <textarea id="message" name="message" class="form-control" rows="6" required></textarea>
+                            </div>
+                            
+                            <div class="form-check">
+                                <input type="checkbox" id="privacy" name="privacy" required>
+                                <label for="privacy">Concordo com a <a href="#">Política de Privacidade</a> e o processamento dos meus dados.</label>
+                            </div>
+                            
+                            <div class="alert alert-success" id="form-success" style="display: none;">
+                                Mensagem enviada com sucesso! Entraremos em contacto em breve.
+                            </div>
+                            
+                            <div class="alert alert-danger" id="form-error" style="display: none;">
+                                Ocorreu um erro ao enviar a mensagem. Por favor, tente novamente.
+                            </div>
+                            
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-primary">Enviar Mensagem</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                
+                <div class="map-container">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3113.2834969155!2d-9.147643!3d38.719373!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd19330dd5a593df%3A0x443b4d4270c43c65!2sAv.%20da%20Liberdade%2C%20Lisboa!5e0!3m2!1spt-PT!2spt!4v1653644321012!5m2!1spt-PT!2spt" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Página Login -->
+    <div id="login" class="pagina">
+        <section class="auth-section">
+            <div class="container auth-container">
+                <div class="auth-content">
+                    <h3>Entrar na sua Conta</h3>
+                    <form id="login-form">
+                        <div class="form-group">
+                            <label for="login-email">Email</label>
+                            <input type="email" id="login-email" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="login-senha">Senha</label>
+                            <input type="password" id="login-senha" class="form-control" required>
+                        </div>
+                        <div class="alert alert-danger" id="login-error" style="display: none;"></div>
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary">Entrar</button>
+                        </div>
+                        <p style="margin-top: 1rem;">Não tem conta? <a onclick="mostrarPagina('registar'); return false;">Registe-se aqui</a></p>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Página Registar -->
+    <div id="registar" class="pagina">
+        <section class="auth-section">
+            <div class="container auth-container">
+                <div class="auth-content">
+                    <h3>Criar Nova Conta</h3>
+                    <form id="register-form">
+                        <div class="form-group">
+                            <label for="register-nome">Nome Completo</label>
+                            <input type="text" id="register-nome" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="register-email">Email</label>
+                            <input type="email" id="register-email" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="register-senha">Senha</label>
+                            <input type="password" id="register-senha" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="register-confirmar-senha">Confirmar Senha</label>
+                            <input type="password" id="register-confirmar-senha" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Tipo de Conta</label>
+                            <div class="form-check">
+                                <input type="radio" id="tipo-cliente" name="tipo" value="cliente" checked>
+                                <label for="tipo-cliente">Cliente</label>
+                            </div>
+                            <div class="form-check">
+                                <input type="radio" id="tipo-profissional" name="tipo" value="profissional">
+                                <label for="tipo-profissional">Profissional</label>
+                            </div>
+                        </div>
+                        <div class="alert alert-danger" id="register-error" style="display: none;"></div>
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary">Registar</button>
+                        </div>
+                        <p style="margin-top: 1rem;">Já tem conta? <a onclick="mostrarPagina('login'); return false;">Entre aqui</a></p>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Rodapé -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Dev\'in House</h3>
+                    <p>A plataforma que conecta os melhores profissionais de construção civil aos clientes que precisam de serviços de qualidade.</p>
+                    <div class="footer-social">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Links Rápidos</h3>
+                    <ul class="footer-links">
+                        <li><a onclick="mostrarPagina('inicio'); return false;">Início</a></li>
+                        <li><a onclick="mostrarPagina('profissionais'); return false;">Profissionais</a></li>
+                        <li><a onclick="mostrarPagina('sobre'); return false;">Sobre Nós</a></li>
+                        <li><a onclick="mostrarPagina('contacto'); return false;">Contacto</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Para Profissionais</h3>
+                    <ul class="footer-links">
+                        <li><a onclick="mostrarPagina('registar'); return false;">Cadastre-se</a></li>
+                        <li><a href="#">Como Funciona</a></li>
+                        <li><a href="#">Dicas para Profissionais</a></li>
+                        <li><a href="#">Termos de Uso</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Para Clientes</h3>
+                    <ul class="footer-links">
+                        <li><a onclick="mostrarPagina('registar'); return false;">Cadastre-se</a></li>
+                        <li><a href="#">Como Contratar</a></li>
+                        <li><a href="#">Dicas para Clientes</a></li>
+                        <li><a href="#">Termos de Uso</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Dev\'in House. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
